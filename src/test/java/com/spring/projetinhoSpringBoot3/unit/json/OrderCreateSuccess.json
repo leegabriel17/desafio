@@ -1,0 +1,56 @@
+{
+  "orderId": 1,
+  "ordersItemRequestList": [
+    {
+      "ordersItemId": 1,
+      "productModel": [
+        {
+          "productId": 1,
+          "productName": "lacta",
+          "quantity": 1,
+          "valueProduct": "20.00"
+        },
+        {
+          "productId": 3,
+          "productName": "coca-cola",
+          "quantity": 3,
+          "valueProduct": "30.00"
+        }
+      ],
+      "userModel": {
+        "userId": 2,
+        "userName": "gabriel",
+        "cpf": "47505282859",
+        "email": "gabrielteste@gmail.com",
+        "password": "teste"
+      }
+    },
+    {
+      "ordersItemId": 2,
+      "productModel": [
+        {
+          "productId": 2,
+          "productName": "batata-frita",
+          "quantity": 2,
+          "valueProduct": "50.00"
+        },
+        {
+          "productId": 4,
+          "productName": "nikito",
+          "quantity": 2,
+          "valueProduct": "10.00"
+        }
+      ],
+      "userModel": {
+        "userId": 1,
+        "userName": "daniel",
+        "cpf": "21780581831",
+        "email": "danielteste@gmail.com",
+        "password": "teste"
+      }
+    }
+  ],
+  "frete": "0.0",
+  "serviceCharge": 0,
+  "discount": "0.0"
+}
