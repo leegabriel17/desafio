@@ -1,19 +1,22 @@
 package com.spring.projetinhoSpringBoot3.domain.model;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrdersItemModel {
-    private long ordersItemId;
-    private List<ProductModel> productModelList;
-    private UserModel userModel;
-    private BigDecimal valueTotalUser;
+public class Orders {
+    private List<Product> product;
+    private String name;
+    @NotNull
+    private BigDecimal totalAmountUser;
     private String urlPayment;
 }

@@ -1,19 +1,17 @@
 package com.spring.projetinhoSpringBoot3.infrastructure.resource.request;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.spring.projetinhoSpringBoot3.domain.model.ProductModel;
-import com.spring.projetinhoSpringBoot3.domain.model.UserModel;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
+import com.spring.projetinhoSpringBoot3.domain.model.Product;
 
+import java.util.List;
 
-public record OrdersItemRequest (
-     @NotNull
-     @JsonProperty(value = "ordersItemId")
-     long ordersItemId,
-     @Valid
-     @JsonProperty(value = "productModel")
-     ProductModel[] productModel,
-     @JsonProperty(value = "userModel")
-     UserModel userModel
-){}
+public class OrdersItemRequest {
+    private List<Product> product;
+    private String  userName;
+    public OrdersItemRequest() {
+    }
+
+    public OrdersItemRequest(List<Product> product, String userName) {
+        this.product = product;
+        this.userName = userName;
+    }
+}
