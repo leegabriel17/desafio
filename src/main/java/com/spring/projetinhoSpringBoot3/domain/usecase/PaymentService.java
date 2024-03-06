@@ -2,6 +2,7 @@ package com.spring.projetinhoSpringBoot3.domain.usecase;
 
 
 import com.spring.projetinhoSpringBoot3.domain.model.Orders;
+import com.spring.projetinhoSpringBoot3.domain.model.Product;
 import com.spring.projetinhoSpringBoot3.infrastructure.resource.request.PaymentRequest;
 import com.spring.projetinhoSpringBoot3.infrastructure.resource.response.PaymentResponse;
 import org.apache.coyote.BadRequestException;
@@ -24,12 +25,12 @@ public class PaymentService{
             if(checkAmount(paymentRequest)){
                 throw new BadRequestException("valores inválidos");
             }
-            for (var i = 0; i < paymentRequest.getOrders().size(); i++) {
+            for (Orders ordersList : paymentRequest.getOrders()) {
                 PaymentResponse paymentResponse = new PaymentResponse();
-                BigDecimal amountIndividual = calculateIndividualAmount(paymentRequest.getOrders().get(i), delivery, discount, totalAmount);
+                BigDecimal amountIndividual = calculateIndividualAmount(ordersList, delivery, discount, totalAmount);
                 String tokenUnic = UUID.randomUUID().toString();
                 String urlPayment = getLinkPayment(tokenUnic, amountIndividual);
-                paymentResponse.setFriendName(paymentRequest.getOrders().get(i).getName());
+                paymentResponse.setFriendName(ordersList.getName());
                 paymentResponse.setProportionalAmount(amountIndividual);
                 paymentResponse.setUrlPayment(urlPayment);
                 paymentResponseList.add(paymentResponse);
@@ -42,10 +43,10 @@ public class PaymentService{
 
     private boolean checkAmount(PaymentRequest paymentRequest) {
         BigDecimal totalIndividual = BigDecimal.ZERO;
-        for (var i = 0; i < paymentRequest.getOrders().size(); i++) {
+        for (Orders ordersList : paymentRequest.getOrders()) {
 
-            for (var j = 0; j < paymentRequest.getOrders().get(i).getProduct().size(); j++) {
-                totalIndividual = totalIndividual.add(paymentRequest.getOrders().get(i).getProduct().get(j).getAmount());
+            for (Product productlist : ordersList.getProduct()) {
+                totalIndividual = totalIndividual.add(productlist.getAmount());
             }
         }
         if(totalIndividual.equals(paymentRequest.getTotalAmount())){
@@ -57,8 +58,8 @@ public class PaymentService{
 
     private BigDecimal calculateIndividualAmount(Orders ordersListDto, BigDecimal delivery, BigDecimal discount, BigDecimal totalAmount) {
         BigDecimal totalIndividual = BigDecimal.ZERO;
-        for (var i = 0; i < ordersListDto.getProduct().size(); i++) {
-            totalIndividual = totalIndividual.add(ordersListDto.getProduct().get(i).getAmount());
+        for (Product ordersLitsDto : ordersListDto.getProduct()) {
+            totalIndividual = totalIndividual.add(ordersLitsDto.getAmount());
         }
         BigDecimal porcent = totalIndividual.divide(totalAmount, 2, RoundingMode.HALF_UP);
         BigDecimal partDelivery = delivery.multiply(porcent);

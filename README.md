@@ -13,3 +13,5 @@ a aplicação recebe um paylod json e fará os calculos de desconto e frete e re
 * nome de cada comprador
 * valor que cada um pagará
 
+# OBJETIVO DO APPFOOD
+o objetivo é para facilitar a divisão do valor de acordo com o valor da compra de cada integrante, calculando o valor total de cada integrante que irá pagar, e mostrando para cada integrante o valor já aplicado o desconto e frete, gerando um link de pagamento.

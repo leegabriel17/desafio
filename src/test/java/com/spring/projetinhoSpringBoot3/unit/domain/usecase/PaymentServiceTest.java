@@ -7,6 +7,8 @@ import com.spring.projetinhoSpringBoot3.infrastructure.resource.response.Payment
 import org.apache.coyote.BadRequestException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
@@ -16,13 +18,18 @@ import static com.spring.projetinhoSpringBoot3.unit.utils.MockHelper.buildPaymen
 import static com.spring.projetinhoSpringBoot3.unit.utils.MockHelper.buildPaymentResponseTeste;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
+@SpringBootTest(classes = {PaymentService.class})
 public class PaymentServiceTest {
+
+
+    @Autowired
+    private PaymentService paymentService;
 
     @Test
     public void testProcessPaymentController() throws BadRequestException {
 
-        PaymentService paymentService = new PaymentService();
         PaymentRequest paymentRequest = buildPaymentRequestTeste();
         List<PaymentResponse> paymentResponseListfail = null;
         List<PaymentResponse> paymentResponseList = paymentService.processPayment(paymentRequest);
@@ -34,9 +41,7 @@ public class PaymentServiceTest {
     @Test
     public void testProcessPaymentTestFalied() throws BadRequestException {
 
-        PaymentService paymentService = new PaymentService();
         PaymentRequest paymentRequest = buildPaymentRequestTesteInvalid();
-
         Assertions.assertThrows(BadRequestException.class, () -> {
             paymentService.processPayment(paymentRequest);
         });
