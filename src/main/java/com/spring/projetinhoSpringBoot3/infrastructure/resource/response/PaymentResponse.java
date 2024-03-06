@@ -13,4 +13,7 @@ public class PaymentResponse {
     String friendName;
     BigDecimal proportionalAmount;
     String urlPayment;
+
+    public PaymentResponse(String name, BigDecimal amountIndividual, String urlPayment) {
+    }
 }

@@ -15,16 +15,14 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class PaymentService{
+public class PaymentService {
     public List<PaymentResponse> processPayment(PaymentRequest paymentRequest) throws BadRequestException {
         List<PaymentResponse> paymentResponseList = new ArrayList<>();
         try {
             BigDecimal delivery = paymentRequest.getDelivery();
             BigDecimal discount = paymentRequest.getDiscount();
             BigDecimal totalAmount = paymentRequest.getTotalAmount();
-            if(checkAmount(paymentRequest)){
-                throw new BadRequestException("valores inválidos");
-            }
+            checkAmount(paymentRequest);
             for (Orders ordersList : paymentRequest.getOrders()) {
                 PaymentResponse paymentResponse = new PaymentResponse();
                 BigDecimal amountIndividual = calculateIndividualAmount(ordersList, delivery, discount, totalAmount);
@@ -35,13 +33,13 @@ public class PaymentService{
                 paymentResponse.setUrlPayment(urlPayment);
                 paymentResponseList.add(paymentResponse);
             }
-        }catch (RuntimeException e){
+        }catch (RuntimeException e) {
             throw new BadRequestException("Erro ao processar o pagamento: " + e.getMessage());
         }
         return paymentResponseList;
     }
 
-    private boolean checkAmount(PaymentRequest paymentRequest) {
+    private void checkAmount(PaymentRequest paymentRequest) throws BadRequestException {
         BigDecimal totalIndividual = BigDecimal.ZERO;
         for (Orders ordersList : paymentRequest.getOrders()) {
 
@@ -49,10 +47,9 @@ public class PaymentService{
                 totalIndividual = totalIndividual.add(productlist.getAmount());
             }
         }
-        if(totalIndividual.equals(paymentRequest.getTotalAmount())){
-            return false;
+        if (!totalIndividual.equals(paymentRequest.getTotalAmount())) {
+            throw new BadRequestException("valores informados não estão corretos");
         }
-        return true;
     }
 
 
