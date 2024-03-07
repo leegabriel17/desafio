@@ -24,13 +24,10 @@ public class PaymentService {
             BigDecimal totalAmount = paymentRequest.getTotalAmount();
             checkAmount(paymentRequest);
             for (Orders ordersList : paymentRequest.getOrders()) {
-                PaymentResponse paymentResponse = new PaymentResponse();
                 BigDecimal amountIndividual = calculateIndividualAmount(ordersList, delivery, discount, totalAmount);
                 String tokenUnic = UUID.randomUUID().toString();
                 String urlPayment = getLinkPayment(tokenUnic, amountIndividual);
-                paymentResponse.setFriendName(ordersList.getName());
-                paymentResponse.setProportionalAmount(amountIndividual);
-                paymentResponse.setUrlPayment(urlPayment);
+                PaymentResponse paymentResponse = new PaymentResponse(ordersList.getName(),amountIndividual,urlPayment);
                 paymentResponseList.add(paymentResponse);
             }
         }catch (RuntimeException e) {
@@ -51,7 +48,6 @@ public class PaymentService {
             throw new BadRequestException("valores informados não estão corretos");
         }
     }
-
 
     private BigDecimal calculateIndividualAmount(Orders ordersListDto, BigDecimal delivery, BigDecimal discount, BigDecimal totalAmount) {
         BigDecimal totalIndividual = BigDecimal.ZERO;

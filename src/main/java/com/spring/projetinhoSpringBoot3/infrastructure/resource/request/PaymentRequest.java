@@ -27,4 +27,7 @@ public class PaymentRequest {
           this.discount = discount;
           this.totalAmount = totalAmount;
      }
+
+     public PaymentRequest(PaymentRequest paymentRequest) {
+     }
 }

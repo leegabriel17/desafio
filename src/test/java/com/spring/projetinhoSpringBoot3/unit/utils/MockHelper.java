@@ -5,7 +5,10 @@ import com.spring.projetinhoSpringBoot3.domain.model.Product;
 import com.spring.projetinhoSpringBoot3.infrastructure.resource.request.PaymentRequest;
 import com.spring.projetinhoSpringBoot3.infrastructure.resource.response.PaymentResponse;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +40,13 @@ public class MockHelper {
         return paymentResponse;
     }
 
+    public static PaymentRequest buildPaymentRequestTesteFalied() {
+        PaymentRequest paymentRequest = new PaymentRequest();
+        paymentRequest.setOrders(getOrders());
+        paymentRequest.setDiscount(BigDecimal.valueOf(20));
+        paymentRequest.setDelivery(BigDecimal.valueOf(8));
+        return paymentRequest;
+    }
     public static List<Orders> getOrders() {
         List<Orders> ordersList = new ArrayList();
         Orders orders = new Orders();
@@ -74,5 +84,9 @@ public class MockHelper {
         product.setAmount(BigDecimal.valueOf(8));
         productList.add(product);
         return productList;
+    }
+
+    public static String builderStringFromJsonFile(final String jsonFileName) throws IOException {
+        return new String(Files.readAllBytes(Paths.get("./src/test/java/com/spring/projetinhoSpringBoot3/unit/json/" + jsonFileName)));
     }
 }

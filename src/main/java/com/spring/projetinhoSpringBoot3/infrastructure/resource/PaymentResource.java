@@ -22,7 +22,7 @@ public class PaymentResource {
     PaymentService paymentService;
 
     @PostMapping("/payment")
-    public ResponseEntity<List<PaymentResponse>> calculatePayment(@RequestBody PaymentRequest paymentRequest) throws BadRequestException {
+    public ResponseEntity<List<PaymentResponse>> calculatePayment(@RequestBody PaymentRequest paymentRequest) throws Exception {
         List<PaymentResponse> paymentResponseList = paymentService.processPayment(paymentRequest);
         return new ResponseEntity<>( paymentResponseList, HttpStatus.OK);
     }

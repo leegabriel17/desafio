@@ -1,0 +1,29 @@
+{
+  "orders":[
+    {
+      "product":[
+        {
+          "name":"hamburguer",
+          "amount":40
+        },
+        {
+          "name":"sobremesa",
+          "amount":2
+        }
+      ],
+      "name":"amigo1"
+    },
+    {
+      "product":[
+        {
+          "name":"sanduiche",
+          "amount":8
+        }
+      ],
+      "name":"amigo2"
+    }
+  ],
+  "delivery":8,
+  "discount":20,
+  "totalAmount": 50
+}
