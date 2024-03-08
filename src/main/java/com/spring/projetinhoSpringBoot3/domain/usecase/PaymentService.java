@@ -27,7 +27,7 @@ public class PaymentService {
                 BigDecimal amountIndividual = calculateIndividualAmount(ordersList, delivery, discount, totalAmount);
                 String tokenUnic = UUID.randomUUID().toString();
                 String urlPayment = getLinkPayment(tokenUnic, amountIndividual);
-                PaymentResponse paymentResponse = new PaymentResponse(ordersList.getName(),amountIndividual,urlPayment);
+                PaymentResponse paymentResponse = new PaymentResponse(ordersList.getName(), amountIndividual, urlPayment);
                 paymentResponseList.add(paymentResponse);
             }
         }catch (RuntimeException e) {

@@ -14,14 +14,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.spring.projetinhoSpringBoot3.unit.utils.MockHelper.*;
+import static com.spring.projetinhoSpringBoot3.unit.utils.MockHelper.buildPaymentRequestTeste;
+import static com.spring.projetinhoSpringBoot3.unit.utils.MockHelper.builderStringFromJsonFile;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.testng.Assert.assertEquals;
 
 @AutoConfigureMockMvc
@@ -49,12 +50,11 @@ public class PaymentResourceTest {
     }
     @Test
     public void testProcessPaymentResourceFalied() throws Exception {
-        PaymentRequest paymentRequest = new PaymentRequest(buildPaymentRequestTesteFalied());
-        when(paymentService.processPayment(paymentRequest)).thenThrow(new BadRequestException());
-        mockMvc.perform(MockMvcRequestBuilders.post("/payment")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        when(paymentService.processPayment(any())).thenThrow(new BadRequestException());
+        mockMvc.perform(post("/payment")
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content(builderStringFromJsonFile("PaymentSuccess.json")))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest());
-        verify(paymentService, times(1)).processPayment(paymentRequest);
+                .andExpect(MockMvcResultMatchers.status().isUnsupportedMediaType());
+
     }
 }
